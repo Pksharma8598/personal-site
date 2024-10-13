@@ -391,29 +391,6 @@
   </div>
 
   <h1 class="credit">Designed with <i class="fa fa-heart pulse"></i> by <a href="https://in.linkedin.com/in/praveen.irsc"> Praveen Kumar</a></h1>
-<?php
-// Define the file path
-$counter_file = 'counter.txt';
-
-// Check if the file exists
-if (!file_exists($counter_file)) {
-    // Create the file with initial count
-    file_put_contents($counter_file, 0);
-}
-
-// Read the current count
-$count = file_get_contents($counter_file);
-
-// Increment the count
-$count++;
-
-// Write the new count back to the file
-file_put_contents($counter_file, $count);
-
-// Display the visitor count
-echo "<div>Visitor Count: $count</div>";
-?>
-
 
 </section>
 <!-- footer section ends -->
