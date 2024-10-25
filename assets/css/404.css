@@ -10,27 +10,6 @@
   text-transform:capitalize;
   transition: all .2s linear;
 }
-.logo {
-    display: flex; /* Aligns the logo and text in a row */
-    align-items: center; /* Vertically centers the text and logo */
-    text-decoration: none;
-    justify-content: flex-start; /* Ensures logo and text stay close */
-    gap: 10px; /* Creates space between the logo and text */
-}
-
-.logo-img {
-    width: 50px; /* Adjust the logo size */
-    height: auto; /* Ensures the aspect ratio remains intact */
-}
-
-.logo-text {
-    font-size: 40px; /* Set font size same as logo */
-    color: black; /* Optional: Set text color */
-    font-weight: bold; /* Makes text bold */
-    display: inline-block; /* Ensures proper alignment */
-    line-height: 1; /* Reduces extra spacing vertically */
-}
-
 
 html{
   font-size: 62.5%;
