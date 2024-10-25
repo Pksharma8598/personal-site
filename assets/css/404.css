@@ -11,22 +11,26 @@
   transition: all .2s linear;
 }
 .logo {
-    display: flex; /* Aligns the logo image and text in a row */
-    align-items: center; /* Aligns the text vertically centered with the image */
-    text-decoration: none; /* Optional: Removes the underline from the link */
+    display: flex; /* Aligns the logo and text in a row */
+    align-items: center; /* Vertically centers the text and logo */
+    text-decoration: none; /* Optional: removes underline from the link */
 }
 
 .logo-img {
-    width: 50px; /* Adjust the size of the logo */
+    width: 50px; /* Adjusts the logo width */
     height: auto; /* Maintains aspect ratio */
+    vertical-align: middle; /* Ensures logo aligns in the middle */
 }
 
 .logo-text {
-    font-size: 50px; /* Adjust the text size to match the logo */
-    margin-left: 10px; /* Adds space between the logo and the text */
-    color: black; /* Adjust the color of the text if needed */
-    font-weight: bold; /* You can modify the font-weight if necessary */
+    font-size: 40px; /* Adjusts the text size */
+    margin-left: 10px; /* Adds space between the logo and text */
+    line-height: 1; /* Removes any extra line-height gap */
+    vertical-align: middle; /* Aligns the text vertically with the logo */
+    color: black; /* Optional: Adjust text color */
+    font-weight: bold; /* Optional: Makes the text bold */
 }
+
 
 html{
   font-size: 62.5%;
