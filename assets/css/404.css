@@ -10,6 +10,24 @@
   text-transform:capitalize;
   transition: all .2s linear;
 }
+.logo {
+    display: flex; /* Aligns the logo image and text in a row */
+    align-items: center; /* Aligns the text vertically centered with the image */
+    text-decoration: none; /* Optional: Removes the underline from the link */
+}
+
+.logo-img {
+    width: 50px; /* Adjust the size of the logo */
+    height: auto; /* Maintains aspect ratio */
+}
+
+.logo-text {
+    font-size: 50px; /* Adjust the text size to match the logo */
+    margin-left: 10px; /* Adds space between the logo and the text */
+    color: black; /* Adjust the color of the text if needed */
+    font-weight: bold; /* You can modify the font-weight if necessary */
+}
+
 html{
   font-size: 62.5%;
   overflow-x: hidden;
