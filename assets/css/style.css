@@ -1219,6 +1219,73 @@ form .button-area {
   transition: 1s linear;
   z-index: 1000;
 }
+
+/* Animation for sections */
+.section {
+    margin-bottom: 20px;
+    animation: slideUp 1.2s ease-in-out;
+}
+
+/* Keyframe for slide-up and slight zoom */
+@keyframes slideUp {
+    from {
+        transform: translateY(20px) scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Animated list items */
+.details li {
+    margin-bottom: 10px;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: fadeInLeft 1.5s ease-in-out forwards;
+    animation-delay: calc(var(--index, 0) * 0.2s);
+}
+
+/* Keyframe for fade-in from left */
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Apply delay to list items */
+.details li:nth-child(1) { --index: 1; }
+.details li:nth-child(2) { --index: 2; }
+.details li:nth-child(3) { --index: 3; }
+.details li:nth-child(4) { --index: 4; }
+
+/* Header animations */
+.section h2 {
+    margin-bottom: 10px;
+    color: #555;
+    border-bottom: 2px solid #f4f4f4;
+    padding-bottom: 5px;
+    animation: slideRight 1.2s ease;
+}
+
+/* Keyframe for slide-right effect */
+@keyframes slideRight {
+    from {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 #scroll-top.active {
   top: calc(100% - 12rem);
 }
