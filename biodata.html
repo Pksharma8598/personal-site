@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marriage Biodata</title>
+    <title>Praveen Kumar Biodata</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,7 +12,14 @@
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
+            animation: fadeIn 2s ease-in;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .container {
             max-width: 800px;
             margin: 20px auto;
@@ -20,51 +27,92 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: slideUp 1s ease-in-out;
         }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
         .header {
             text-align: center;
             margin-bottom: 20px;
+            animation: zoomIn 1.5s ease;
         }
-        .header h1 {
-            margin: 0;
-            color: #444;
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
+
         .photo {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .photo img {
             width: 150px;
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
+            border: 4px solid #555;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            animation: rotateIn 1.5s ease;
         }
+
+        @keyframes rotateIn {
+            from { transform: rotate(-180deg); opacity: 0; }
+            to { transform: rotate(0); opacity: 1; }
+        }
+
         .section {
             margin-bottom: 20px;
+            animation: fadeIn 2s ease-in;
         }
+
         .section h2 {
             margin-bottom: 10px;
             color: #555;
             border-bottom: 2px solid #f4f4f4;
             padding-bottom: 5px;
+            animation: slideLeft 1.2s ease;
         }
+
+        @keyframes slideLeft {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
         .details {
             list-style: none;
             padding: 0;
         }
+
         .details li {
             margin-bottom: 10px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .details a {
+            color: #007BFF;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .details a:hover {
+            color: #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Marriage Biodata</h1>
+            <h1>Praveen Kumar Biodata</h1>
         </div>
 
         <div class="photo">
-            <img src="your-photo.jpg" alt="Your Photo">
+            <img src="./assets/images/profile2.jpg" alt="Your Photo">
         </div>
 
         <div class="section">
@@ -118,3 +166,4 @@
     </div>
 </body>
 </html>
+
