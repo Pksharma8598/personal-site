@@ -3,91 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Photo Gallery</title>
+    <title>Photo Carousel</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to right, #f6d365, #fda085);
-            color: #333;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        .gallery-container {
-            max-width: 900px;
-            margin: 20px auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            padding: 20px;
-        }
-
-        .gallery-item {
+        .carousel {
             position: relative;
+            width: 80%;
+            max-width: 800px;
             overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .gallery-item:hover {
-            transform: scale(1.5);
-            z-index: 10;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
         }
 
-        .gallery-item img {
+        .carousel-slide {
+            min-width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-slide img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
             display: block;
+            border-radius: 15px;
         }
 
-        .gallery-item:hover img {
-            filter: brightness(1.2);
-        }
-
-        .gallery-caption {
+        .carousel-caption {
             position: absolute;
-            bottom: 0;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
             background: rgba(0, 0, 0, 0.5);
             color: white;
-            width: 100%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 1.2em;
             text-align: center;
-            padding: 5px 0;
-            font-size: 14px;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.5s ease-in-out;
         }
 
-        .gallery-item:hover .gallery-caption {
+        .carousel-slide:hover .carousel-caption {
             opacity: 1;
+        }
+
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-button {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 10px;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: background 0.3s;
+        }
+
+        .carousel-button:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            margin: 0 5px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background: white;
         }
     </style>
 </head>
 <body>
-    <div class="gallery-container">
-        <!-- Gallery Items -->
-        <div class="gallery-item">
-            <img src="./assets/images/photo01.jpg" alt="Photo 1">
-            <div class="gallery-caption">Photo 1</div>
+    <div class="carousel">
+        <div class="carousel-track">
+            <div class="carousel-slide">
+                <img src="./assets/images/photo01.JPG" alt="">
+                <div class="carousel-caption"></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="./assets/images/photo02.jpg" alt="">
+                <div class="carousel-caption"></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="./assets/images/photo03.dng" alt="">
+                <div class="carousel-caption"></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="./assets/images/photo04.jpg" alt="">
+                <div class="carousel-caption"></div>
+            </div>
+            <div class="carousel-slide">
+                <img src="./assets/images/photo05.jpg" alt="">
+                <div class="carousel-caption"></div>
+            </div>
         </div>
-        <div class="gallery-item">
-            <img src="./assets/images/photo02.jpg" alt="Photo 2">
-            <div class="gallery-caption">Photo 2</div>
+        <div class="carousel-buttons">
+            <button class="carousel-button prev">&lt;</button>
+            <button class="carousel-button next">&gt;</button>
         </div>
-        <div class="gallery-item">
-            <img src="./assets/images/photo03.dng" alt="Photo 3">
-            <div class="gallery-caption">Photo 3</div>
-        </div>
-        <div class="gallery-item">
-            <img src="./assets/images/photo04.jpg" alt="Photo 4">
-            <div class="gallery-caption">Photo 4</div>
-        </div>
-        <div class="gallery-item">
-            <img src="./assets/images/photo05.jpg" alt="Photo 5">
-            <div class="gallery-caption">Photo 5</div>
-        </div>
+        <div class="carousel-dots"></div>
     </div>
+
+    <script>
+        const track = document.querySelector('.carousel-track');
+        const slides = Array.from(track.children);
+        const nextButton = document.querySelector('.next');
+        const prevButton = document.querySelector('.prev');
+        const dotsNav = document.querySelector('.carousel-dots');
+
+        const slideWidth = slides[0].getBoundingClientRect().width;
+
+        // Arrange slides next to one another
+        slides.forEach((slide, index) => {
+            slide.style.left = slideWidth * index + 'px';
+        });
+
+        // Create dots dynamically
+        slides.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dotsNav.appendChild(dot);
+        });
+
+        const dots = Array.from(dotsNav.children);
+
+        const moveToSlide = (track, currentSlide, targetSlide) => {
+            track.style.transform = `translateX(-${targetSlide.style.left})`;
+            currentSlide.classList.remove('current-slide');
+            targetSlide.classList.add('current-slide');
+        };
+
+        const updateDots = (currentDot, targetDot) => {
+            currentDot.classList.remove('active');
+            targetDot.classList.add('active');
+        };
+
+        const updateButtons = (targetIndex) => {
+            prevButton.style.visibility = targetIndex === 0 ? 'hidden' : 'visible';
+            nextButton.style.visibility = targetIndex === slides.length - 1 ? 'hidden' : 'visible';
+        };
+
+        prevButton.addEventListener('click', () => {
+            const currentSlide = track.querySelector('.current-slide') || slides[0];
+            const prevSlide = currentSlide.previousElementSibling;
+            const currentDot = dotsNav.querySelector('.active');
+            const prevDot = currentDot.previousElementSibling;
+            const prevIndex = slides.findIndex(slide => slide === prevSlide);
+
+            moveToSlide(track, currentSlide, prevSlide);
+            updateDots(currentDot, prevDot);
+            updateButtons(prevIndex);
+        });
+
+        nextButton.addEventListener('click', () => {
+            const currentSlide = track.querySelector('.current-slide') || slides[0];
+            const nextSlide = currentSlide.nextElementSibling;
+            const currentDot = dotsNav.querySelector('.active');
+            const nextDot = currentDot.nextElementSibling;
+            const nextIndex = slides.findIndex(slide => slide === nextSlide);
+
+            moveToSlide(track, currentSlide, nextSlide);
+            updateDots(currentDot, nextDot);
+            updateButtons(nextIndex);
+        });
+
+        dotsNav.addEventListener('click', e => {
+            const targetDot = e.target.closest('button');
+
+            if (!targetDot) return;
+
+            const currentSlide = track.querySelector('.current-slide') || slides[0];
+            const currentDot = dotsNav.querySelector('.active');
+            const targetIndex = dots.findIndex(dot => dot === targetDot);
+            const targetSlide = slides[targetIndex];
+
+            moveToSlide(track, currentSlide, targetSlide);
+            updateDots(currentDot, targetDot);
+            updateButtons(targetIndex);
+        });
+
+        updateButtons(0);
+    </script>
 </body>
 </html>
