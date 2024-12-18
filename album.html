@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Carousel</title>
+    <title>Dynamic Photo Carousel</title>
     <style>
         body {
             margin: 0;
@@ -33,7 +33,6 @@
         .carousel-slide {
             min-width: 100%;
             overflow: hidden;
-            position: relative;
         }
 
         .carousel-slide img {
@@ -41,25 +40,6 @@
             height: auto;
             display: block;
             border-radius: 15px;
-        }
-
-        .carousel-caption {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-size: 1.2em;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .carousel-slide:hover .carousel-caption {
-            opacity: 1;
         }
 
         .carousel-buttons {
@@ -111,26 +91,7 @@
 <body>
     <div class="carousel">
         <div class="carousel-track">
-            <div class="carousel-slide">
-                <img src="./assets/images/photo01.JPG" alt="praveen">
-                <div class="carousel-caption"></div>
-            </div>
-            <div class="carousel-slide">
-                <img src="./assets/images/photo02.jpg" alt="praveen">
-                <div class="carousel-caption"></div>
-            </div>
-            <div class="carousel-slide">
-                <img src="./assets/images/photo03.dng" alt="praveen">
-                <div class="carousel-caption"></div>
-            </div>
-            <div class="carousel-slide">
-                <img src="./assets/images/photo04.jpg" alt="praveen">
-                <div class="carousel-caption"></div>
-            </div>
-            <div class="carousel-slide">
-                <img src="./assets/images/photo05.jpg" alt="praveen">
-                <div class="carousel-caption"></div>
-            </div>
+            <!-- Images dynamically added by JavaScript -->
         </div>
         <div class="carousel-buttons">
             <button class="carousel-button prev">&lt;</button>
@@ -140,38 +101,53 @@
     </div>
 
     <script>
+        // List of image paths
+        const images = [
+            './assets/images/photo01.jpg',
+            './assets/images/photo02.jpg',
+            './assets/images/photo03.dng',
+            './assets/images/photo04.jpg',
+            './assets/images/photo05.jpg',
+        ];
+
+        // DOM elements
         const track = document.querySelector('.carousel-track');
-        const slides = Array.from(track.children);
+        const dotsNav = document.querySelector('.carousel-dots');
         const nextButton = document.querySelector('.next');
         const prevButton = document.querySelector('.prev');
-        const dotsNav = document.querySelector('.carousel-dots');
 
-        const slideWidth = slides[0].getBoundingClientRect().width;
+        // Populate slides dynamically
+        images.forEach((src, index) => {
+            const slide = document.createElement('div');
+            slide.classList.add('carousel-slide');
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = `Photo ${index + 1}`;
+            slide.appendChild(img);
+            track.appendChild(slide);
 
-        // Arrange slides next to one another
-        slides.forEach((slide, index) => {
-            slide.style.left = slideWidth * index + 'px';
-        });
-
-        // Create dots dynamically
-        slides.forEach((_, index) => {
+            // Create dots dynamically
             const dot = document.createElement('button');
             dot.classList.add('dot');
             if (index === 0) dot.classList.add('active');
             dotsNav.appendChild(dot);
         });
 
+        const slides = Array.from(track.children);
         const dots = Array.from(dotsNav.children);
+        const slideWidth = slides[0].getBoundingClientRect().width;
 
-        const moveToSlide = (track, currentSlide, targetSlide) => {
+        // Arrange slides next to one another
+        slides.forEach((slide, index) => {
+            slide.style.left = `${slideWidth * index}px`;
+        });
+
+        const moveToSlide = (targetIndex) => {
+            const targetSlide = slides[targetIndex];
             track.style.transform = `translateX(-${targetSlide.style.left})`;
-            currentSlide.classList.remove('current-slide');
-            targetSlide.classList.add('current-slide');
-        };
-
-        const updateDots = (currentDot, targetDot) => {
-            currentDot.classList.remove('active');
-            targetDot.classList.add('active');
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[targetIndex].classList.add('active');
+            updateButtons(targetIndex);
         };
 
         const updateButtons = (targetIndex) => {
@@ -179,46 +155,33 @@
             nextButton.style.visibility = targetIndex === slides.length - 1 ? 'hidden' : 'visible';
         };
 
-        prevButton.addEventListener('click', () => {
-            const currentSlide = track.querySelector('.current-slide') || slides[0];
-            const prevSlide = currentSlide.previousElementSibling;
-            const currentDot = dotsNav.querySelector('.active');
-            const prevDot = currentDot.previousElementSibling;
-            const prevIndex = slides.findIndex(slide => slide === prevSlide);
+        let currentIndex = 0;
 
-            moveToSlide(track, currentSlide, prevSlide);
-            updateDots(currentDot, prevDot);
-            updateButtons(prevIndex);
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                moveToSlide(currentIndex);
+            }
         });
 
         nextButton.addEventListener('click', () => {
-            const currentSlide = track.querySelector('.current-slide') || slides[0];
-            const nextSlide = currentSlide.nextElementSibling;
-            const currentDot = dotsNav.querySelector('.active');
-            const nextDot = currentDot.nextElementSibling;
-            const nextIndex = slides.findIndex(slide => slide === nextSlide);
-
-            moveToSlide(track, currentSlide, nextSlide);
-            updateDots(currentDot, nextDot);
-            updateButtons(nextIndex);
+            if (currentIndex < slides.length - 1) {
+                currentIndex++;
+                moveToSlide(currentIndex);
+            }
         });
 
-        dotsNav.addEventListener('click', e => {
+        dotsNav.addEventListener('click', (e) => {
             const targetDot = e.target.closest('button');
-
             if (!targetDot) return;
 
-            const currentSlide = track.querySelector('.current-slide') || slides[0];
-            const currentDot = dotsNav.querySelector('.active');
             const targetIndex = dots.findIndex(dot => dot === targetDot);
-            const targetSlide = slides[targetIndex];
-
-            moveToSlide(track, currentSlide, targetSlide);
-            updateDots(currentDot, targetDot);
-            updateButtons(targetIndex);
+            currentIndex = targetIndex;
+            moveToSlide(targetIndex);
         });
 
-        updateButtons(0);
+        // Initialize visibility of buttons
+        updateButtons(currentIndex);
     </script>
 </body>
 </html>
