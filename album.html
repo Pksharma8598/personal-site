@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Photo Gallery</title>
+    <title>Dynamic Photo Gallery</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background: linear-gradient(to right, #f6d365, #fda085);
             color: #333;
         }
 
@@ -26,14 +26,14 @@
             position: relative;
             overflow: hidden;
             border-radius: 8px;
-            cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .gallery-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            transform: scale(1.5);
+            z-index: 10;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
         }
 
         .gallery-item img {
@@ -43,85 +43,51 @@
             display: block;
         }
 
-        /* Lightbox Styling */
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+        .gallery-item:hover img {
+            filter: brightness(1.2);
         }
 
-        .lightbox img {
-            max-width: 90%;
-            max-height: 80%;
-            border-radius: 10px;
-        }
-
-        .lightbox:target {
-            display: flex;
-        }
-
-        .lightbox-close {
+        .gallery-caption {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 30px;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
             color: white;
-            text-decoration: none;
-            font-weight: bold;
+            width: 100%;
+            text-align: center;
+            padding: 5px 0;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .lightbox-close:hover {
-            color: #f4f4f4;
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
     <div class="gallery-container">
-        <!-- Add your photos -->
-        <a href="#photo01" class="gallery-item">
-            <img src="./assets/images/photo01.jpg" alt="Photo01">
-        </a>
-        <a href="#photo02" class="gallery-item">
-            <img src="./assets/images/photo02.jpg" alt="Photo02">
-        </a>
-        <a href="#photo03" class="gallery-item">
-            <img src="./assets/images/photo03.dng" alt="Photo03">
-        </a>
-        <a href="#photo04" class="gallery-item">
-            <img src="./assets/images/photo04.jpg" alt="Photo04">
-        </a>
-        <a href="#photo5" class="gallery-item">
-            <img src="./assets/images/photo05.jpg" alt="Photo05">
-        </a>
-    </div>
-
-    <!-- Lightbox Modals -->
-    <div id="photo01" class="lightbox">
-        <a href="#" class="lightbox-close">&times;</a>
-        <img src="./assets/images/photo01.jpg" alt="Photo 1">
-    </div>
-    <div id="photo02" class="lightbox">
-        <a href="#" class="lightbox-close">&times;</a>
-        <img src="./assets/images/photo02.jpg" alt="Photo 2">
-    </div>
-    <div id="photo03" class="lightbox">
-        <a href="#" class="lightbox-close">&times;</a>
-        <img src="./assets/images/photo03.dng" alt="Photo 3">
-    </div>
-    <div id="photo04" class="lightbox">
-        <a href="#" class="lightbox-close">&times;</a>
-        <img src="./assets/images/photo04.jpg" alt="Photo 4">
-    </div>
-    <div id="photo05" class="lightbox">
-        <a href="#" class="lightbox-close">&times;</a>
-        <img src="./assets/images/photo05.jpg" alt="Photo 5">
+        <!-- Gallery Items -->
+        <div class="gallery-item">
+            <img src="./assets/images/photo01.jpg" alt="Photo 1">
+            <div class="gallery-caption">Photo 1</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./assets/images/photo02.jpg" alt="Photo 2">
+            <div class="gallery-caption">Photo 2</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./assets/images/photo03.dng" alt="Photo 3">
+            <div class="gallery-caption">Photo 3</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./assets/images/photo04.jpg" alt="Photo 4">
+            <div class="gallery-caption">Photo 4</div>
+        </div>
+        <div class="gallery-item">
+            <img src="./assets/images/photo05.jpg" alt="Photo 5">
+            <div class="gallery-caption">Photo 5</div>
+        </div>
     </div>
 </body>
 </html>
