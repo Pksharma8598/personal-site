@@ -27,6 +27,7 @@
 
         .carousel-track {
             display: flex;
+            height: 400px; /* Ensure consistent slide height */
             transition: transform 0.5s ease-in-out;
         }
 
@@ -36,10 +37,10 @@
         }
 
         .carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures images are cropped to fit the container */
-    border-radius: 15px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure uniform image scaling */
+            border-radius: 15px;
         }
 
         .carousel-buttons {
@@ -101,7 +102,6 @@
     </div>
 
     <script>
-        // List of image paths
         const images = [
             './assets/images/photo01.jpg',
             './assets/images/photo02.jpg',
@@ -110,23 +110,19 @@
             './assets/images/photo05.jpg',
         ];
 
-        // DOM elements
         const track = document.querySelector('.carousel-track');
         const dotsNav = document.querySelector('.carousel-dots');
         const nextButton = document.querySelector('.next');
         const prevButton = document.querySelector('.prev');
 
-        // Populate slides dynamically
         images.forEach((src, index) => {
             const slide = document.createElement('div');
             slide.classList.add('carousel-slide');
             const img = document.createElement('img');
             img.src = src;
-            img.alt = `Photo ${index + 1}`;
             slide.appendChild(img);
             track.appendChild(slide);
 
-            // Create dots dynamically
             const dot = document.createElement('button');
             dot.classList.add('dot');
             if (index === 0) dot.classList.add('active');
@@ -137,7 +133,6 @@
         const dots = Array.from(dotsNav.children);
         const slideWidth = slides[0].getBoundingClientRect().width;
 
-        // Arrange slides next to one another
         slides.forEach((slide, index) => {
             slide.style.left = `${slideWidth * index}px`;
         });
@@ -180,7 +175,6 @@
             moveToSlide(targetIndex);
         });
 
-        // Initialize visibility of buttons
         updateButtons(currentIndex);
     </script>
 </body>
